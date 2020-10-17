@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
@@ -17,7 +18,7 @@ const getJSLoader = (loader) => {
       loader: 'babel-loader',
       options: {
         presets: ['@babel/preset-env'],
-        plugins: ['transform-class-properties'],
+        plugins: ['@babel/plugin-proposal-class-properties'],
       },
     },
   ];
@@ -69,7 +70,7 @@ module.exports = {
     filename: getFilename('js'),
     path: path.resolve(__dirname, 'dist'),
   },
-  devtool: isDevMode ? 'inline-source-map' : '',
+  devtool: isDevMode ? 'inline-source-map' : false,
   devServer: {
     port: '8080',
     open: isDevMode,
@@ -77,8 +78,9 @@ module.exports = {
   optimization: optimization(),
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: 'assets', to: 'dest' }],
+      patterns: [{ from: 'assets', to: 'assets' }],
     }),
+    new CleanWebpackPlugin(),
     new HtmlPlugin({
       template: path.resolve(__dirname, 'src', 'public', 'index.html'),
       minify: {
