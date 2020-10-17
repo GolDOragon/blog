@@ -1,0 +1,52 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "description": "Blog implemetation",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "start": "cross-env NODE_ENV=development npx webpack serve --mode development",
+    "build": "cross-env NODE_ENV=production npx webpack --mode production",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src"
+  },
+  "repository": "git+https://github.com/GolDOragon/blog.git",
+  "keywords": [
+    "webpack",
+    "ts",
+    "react",
+    "redux",
+    "jest"
+  ],
+  "author": "GolDOragon <palanevich.aleksey@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GolDOragon/blog/issues"
+  },
+  "homepage": "https://github.com/GolDOragon/blog#readme",
+  "private": true,
+  "devDependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.2.1",
+    "css-loader": "^5.0.0",
+    "eslint": "^7.11.0",
+    "eslint-loader": "^4.0.2",
+    "file-loader": "^6.1.1",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "sass-loader": "^10.0.3",
+    "terser-webpack-plugin": "^5.0.0",
+    "ts-loader": "^8.0.5",
+    "typescript": "^4.0.3",
+    "webpack": "^5.1.3",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2"
+  }
+}
