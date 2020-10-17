@@ -12,19 +12,30 @@ const isProdMode = !isDevMode;
 const getFilename = (ext) =>
   isDevMode ? `[name].${ext}` : `[name].[hash].${ext}`;
 
-const getJSLoader = (loader) => {
+// const getJSLoader = ({ additionalPresets, additionalLoaders }) => {
+// const getJSLoader = (settings) => {
+const getJSLoader = ({ additionalPresets, additionalLoaders }) => {
+  // const { additionalPresets, additionalLoaders } = settings;
+  const options = {
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-proposal-class-properties'],
+  };
+
+  if (additionalPresets && additionalPresets !== 0) {
+    options.presets.push(...additionalPresets);
+  }
   const loaders = [
     {
       loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env'],
-        plugins: ['@babel/plugin-proposal-class-properties'],
-      },
+      options,
     },
   ];
 
-  if (loader) loaders.push(loader);
+  if (additionalLoaders && additionalLoaders !== 0) {
+    loaders.push(additionalLoaders);
+  }
   if (isDevMode) loaders.push('eslint-loader');
+
   return loaders;
 };
 
@@ -64,11 +75,14 @@ module.exports = {
   mode: 'development',
   context: path.resolve(__dirname, 'src'),
   entry: {
-    main: ['@babel/polyfill', './index.js'],
+    main: ['@babel/polyfill', './index.ts'],
   },
   output: {
     filename: getFilename('js'),
     path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   devtool: isDevMode ? 'inline-source-map' : false,
   devServer: {
@@ -101,12 +115,25 @@ module.exports = {
       {
         test: /\.js$/i,
         exclude: /node_modules/,
-        use: getJSLoader(),
+        use: getJSLoader({}),
+      },
+      {
+        test: /\.jsx$/i,
+        exclude: /node_modules/,
+        use: getJSLoader({ additionalPresets: '@babel/preset-react' }),
       },
       {
         test: /\.ts$/i,
         exclude: /node_modules/,
-        use: getJSLoader('ts-loader'),
+        use: getJSLoader({ additionalLoaders: 'ts-loader' }),
+      },
+      {
+        test: /\.tsx$/i,
+        exclude: /node_modules/,
+        use: getJSLoader({
+          additionalPresets: '@babel/preset-react',
+          additionalLoaders: 'ts-loader',
+        }),
       },
       {
         test: /\.css$/i,
