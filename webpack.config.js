@@ -49,7 +49,7 @@ module.exports = (env, argv) => {
   return {
     context: path.resolve(__dirname, "src"),
     entry: {
-      main: path.resolve(__dirname, "src", "index.ts"),
+      main: path.resolve(__dirname, "src", "index.tsx"),
     },
     output: {
       filename: getFilename(isDevMode, "js"),
