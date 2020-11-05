@@ -59,9 +59,13 @@ module.exports = (env, argv) => {
       // alias: {
       //   '@': path.resolve(__dirname, 'src')
       // }
-      extensions: ["ts", "tsx", "js", "jsx"],
+      extensions: [".ts", ".tsx", ".js", ".jsx", ],
     },
-    devtool: isDevMode ? "inline-source-map" : undefined,
+    devtool: isDevMode ? "source-map" : undefined,
+    devServer: {
+      open: isDevMode,
+      port: "3000",
+    },
     optimization: optimization(isProdMode),
     plugins: [
       new CopyPlugin({

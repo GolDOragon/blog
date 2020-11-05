@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "npx webpack --mode development",
+    "start": "npx webpack serve --mode development",
     "build": "npx webpack --mode production"
   },
   "devDependencies": {
